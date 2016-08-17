@@ -86,7 +86,11 @@ public class File extends Element {
 	@Override
 	public String getListItemCssClass() {
 		// TODO: Multiple classes based on file type (from extension or mime type/magic?)
-		return "semanticcms-file-list-item-file";
+		if(path.endsWith("/")) {
+			return "semanticcms-file-list-item-directory";
+		} else {
+			return "semanticcms-file-list-item-file";
+		}
 	}
 
 	@Override
@@ -97,6 +101,10 @@ public class File extends Element {
 	@Override
 	public String getLinkCssClass() {
 		// TODO: Multiple classes based on file type (from extension or mime type/magic?)
-		return "semanticcms-file-file-link";
+		if(path.endsWith("/")) {
+			return "semanticcms-file-directory-link";
+		} else {
+			return "semanticcms-file-file-link";
+		}
 	}
 }
