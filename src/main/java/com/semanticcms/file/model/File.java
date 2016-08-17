@@ -26,7 +26,16 @@ import com.semanticcms.core.model.Element;
 
 public class File extends Element {
 
-	private String label;
+	/**
+	 * The path separator used for all file references.
+	 */
+	public static final char SEPARATOR_CHAR = '/';
+
+	/**
+	 * The path separator as a String.
+	 */
+	public static final String SEPARATOR_STRING = Character.toString(SEPARATOR_CHAR);
+
 	private String book;
 	private String path;
 	private boolean hidden;
@@ -38,22 +47,22 @@ public class File extends Element {
 	}
 
 	/**
-	 * If not set, defaults to the last path segment of path.
+	 * The label is always the filename.
 	 */
 	@Override
 	public String getLabel() {
-		if(label != null) return label;
 		if(path != null) {
-			String filename = path.substring(path.lastIndexOf('/') + 1);
+			int slashBefore;
+			if(path.endsWith(SEPARATOR_STRING)) {
+				slashBefore = path.lastIndexOf(SEPARATOR_CHAR, path.length() - 2);
+			} else {
+				slashBefore = path.lastIndexOf(SEPARATOR_CHAR);
+			}
+			String filename = path.substring(slashBefore + 1);
 			if(filename.isEmpty()) throw new IllegalArgumentException("Invalid filename for file: " + path);
 			return filename;
 		}
-		throw new IllegalStateException("Cannot get label, neither label nor path set");
-	}
-
-	public void setLabel(String label) {
-		checkNotFrozen();
-		this.label = label==null || label.isEmpty() ? null : label;
+		throw new IllegalStateException("Path not set");
 	}
 
 	public String getBook() {
@@ -86,7 +95,7 @@ public class File extends Element {
 	@Override
 	public String getListItemCssClass() {
 		// TODO: Multiple classes based on file type (from extension or mime type/magic?)
-		if(path.endsWith("/")) {
+		if(path.endsWith(SEPARATOR_STRING)) {
 			return "semanticcms-file-list-item-directory";
 		} else {
 			return "semanticcms-file-list-item-file";
@@ -101,7 +110,7 @@ public class File extends Element {
 	@Override
 	public String getLinkCssClass() {
 		// TODO: Multiple classes based on file type (from extension or mime type/magic?)
-		if(path.endsWith("/")) {
+		if(path.endsWith(SEPARATOR_STRING)) {
 			return "semanticcms-file-directory-link";
 		} else {
 			return "semanticcms-file-file-link";
