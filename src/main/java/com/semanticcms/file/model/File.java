@@ -22,7 +22,11 @@
  */
 package com.semanticcms.file.model;
 
+import com.aoindustries.util.StringUtility;
+import com.aoindustries.util.WrappedException;
 import com.semanticcms.core.model.Element;
+import com.semanticcms.core.model.PageRef;
+import java.io.IOException;
 
 public class File extends Element {
 
@@ -36,8 +40,7 @@ public class File extends Element {
 	 */
 	public static final String SEPARATOR_STRING = Character.toString(SEPARATOR_CHAR);
 
-	private String book;
-	private String path;
+	private PageRef pageRef;
 	private boolean hidden;
 
 	@Override
@@ -47,11 +50,12 @@ public class File extends Element {
 	}
 
 	/**
-	 * The label is always the filename.
+	 * Does not include the size on the ID template, also strips any file extension if it will not leave the filename empty.
 	 */
 	@Override
-	public String getLabel() {
-		if(path != null) {
+	protected String getElementIdTemplate() {
+		if(pageRef != null) {
+			String path = pageRef.getPath();
 			int slashBefore;
 			if(path.endsWith(SEPARATOR_STRING)) {
 				slashBefore = path.lastIndexOf(SEPARATOR_CHAR, path.length() - 2);
@@ -60,27 +64,58 @@ public class File extends Element {
 			}
 			String filename = path.substring(slashBefore + 1);
 			if(filename.isEmpty()) throw new IllegalArgumentException("Invalid filename for file: " + path);
+			// Strip extension if will not leave empty
+			int lastDot = filename.lastIndexOf('.');
+			if(lastDot > 0) filename = filename.substring(0, lastDot);
 			return filename;
 		}
 		throw new IllegalStateException("Path not set");
 	}
 
-	public String getBook() {
-		return book;
+	/**
+	 * The label is always the filename.
+	 */
+	@Override
+	public String getLabel() {
+		if(pageRef != null) {
+			String path = pageRef.getPath();
+			boolean isDirectory = path.endsWith(SEPARATOR_STRING);
+			int slashBefore;
+			if(isDirectory) {
+				slashBefore = path.lastIndexOf(SEPARATOR_CHAR, path.length() - 2);
+			} else {
+				slashBefore = path.lastIndexOf(SEPARATOR_CHAR);
+			}
+			String filename = path.substring(slashBefore + 1);
+			if(filename.isEmpty()) throw new IllegalArgumentException("Invalid filename for file: " + path);
+			if(!isDirectory) {
+				java.io.File resourceFile;
+				try {
+					resourceFile = pageRef.getResourceFile(false, true);
+				} catch(IOException e) {
+					throw new WrappedException(e);
+				}
+				if(resourceFile != null) {
+					return
+						filename
+						+ " ("
+						+ StringUtility.getApproximateSize(resourceFile.length())
+						+ ')'
+					;
+				}
+			}
+			return filename;
+		}
+		throw new IllegalStateException("Path not set");
 	}
 
-	public void setBook(String book) {
+	public PageRef getPageRef() {
+		return pageRef;
+	}
+
+	public void setPageRef(PageRef pageRef) {
 		checkNotFrozen();
-		this.book = book==null || book.isEmpty() ? null : book;
-	}
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		checkNotFrozen();
-		this.path = path==null || path.isEmpty() ? null : path;
+		this.pageRef = pageRef;
 	}
 
 	public boolean isHidden() {
@@ -95,7 +130,7 @@ public class File extends Element {
 	@Override
 	public String getListItemCssClass() {
 		// TODO: Multiple classes based on file type (from extension or mime type/magic?)
-		if(path.endsWith(SEPARATOR_STRING)) {
+		if(pageRef.getPath().endsWith(SEPARATOR_STRING)) {
 			return "semanticcms-file-list-item-directory";
 		} else {
 			return "semanticcms-file-list-item-file";
@@ -110,7 +145,7 @@ public class File extends Element {
 	@Override
 	public String getLinkCssClass() {
 		// TODO: Multiple classes based on file type (from extension or mime type/magic?)
-		if(path.endsWith(SEPARATOR_STRING)) {
+		if(pageRef.getPath().endsWith(SEPARATOR_STRING)) {
 			return "semanticcms-file-directory-link";
 		} else {
 			return "semanticcms-file-file-link";
