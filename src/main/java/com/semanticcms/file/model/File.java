@@ -141,14 +141,4 @@ public class File extends Element {
 	protected String getDefaultIdPrefix() {
 		return "file";
 	}
-
-	@Override
-	public String getLinkCssClass() {
-		// TODO: Multiple classes based on file type (from extension or mime type/magic?)
-		if(pageRef.getPath().endsWith(SEPARATOR_STRING)) {
-			return "semanticcms-file-directory-link";
-		} else {
-			return "semanticcms-file-file-link";
-		}
-	}
 }
