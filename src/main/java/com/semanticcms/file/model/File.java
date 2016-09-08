@@ -118,6 +118,7 @@ public class File extends Element {
 		this.pageRef = pageRef;
 	}
 
+	@Override
 	public boolean isHidden() {
 		return hidden;
 	}
