@@ -27,7 +27,7 @@ along with semanticcms-file-model.  If not, see <http://www.gnu.org/licenses />.
 	<parent>
 		<groupId>com.semanticcms</groupId>
 		<artifactId>semanticcms-file</artifactId>
-		<version>1.2-SNAPSHOT</version>
+		<version>1.2</version>
 	</parent>
 
 	<groupId>com.semanticcms</groupId>
@@ -55,7 +55,7 @@ along with semanticcms-file-model.  If not, see <http://www.gnu.org/licenses />.
 		<dependency>
 			<groupId>com.semanticcms</groupId>
 			<artifactId>semanticcms-core-model</artifactId>
-			<version>1.6-SNAPSHOT</version>
+			<version>1.6</version>
 		</dependency>
 	</dependencies>
 </project>
