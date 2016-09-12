@@ -27,7 +27,7 @@ along with semanticcms-file-model.  If not, see <http://www.gnu.org/licenses />.
 	<parent>
 		<groupId>com.semanticcms</groupId>
 		<artifactId>semanticcms-file</artifactId>
-		<version>1.2</version>
+		<version>1.3-SNAPSHOT</version>
 	</parent>
 
 	<groupId>com.semanticcms</groupId>
@@ -36,7 +36,7 @@ along with semanticcms-file-model.  If not, see <http://www.gnu.org/licenses />.
 	<packaging>jar</packaging>
 
 	<name>SemanticCMS File Model</name>
-	<url>https://semanticcms.com/docs/semanticcms-file-model/</url>
+	<url>https://semanticcms.com/file/model/</url>
 	<description>Files nested within SemanticCMS pages and elements.</description>
 
 	<scm>
@@ -55,7 +55,7 @@ along with semanticcms-file-model.  If not, see <http://www.gnu.org/licenses />.
 		<dependency>
 			<groupId>com.semanticcms</groupId>
 			<artifactId>semanticcms-core-model</artifactId>
-			<version>1.6</version>
+			<version>1.7-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
