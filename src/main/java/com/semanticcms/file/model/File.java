@@ -54,8 +54,9 @@ public class File extends Element {
 	 */
 	@Override
 	protected String getElementIdTemplate() {
-		if(pageRef != null) {
-			String path = pageRef.getPath();
+		PageRef pr = getPageRef();
+		if(pr != null) {
+			String path = pr.getPath();
 			int slashBefore;
 			if(path.endsWith(SEPARATOR_STRING)) {
 				slashBefore = path.lastIndexOf(SEPARATOR_CHAR, path.length() - 2);
@@ -77,8 +78,9 @@ public class File extends Element {
 	 */
 	@Override
 	public String getLabel() {
-		if(pageRef != null) {
-			String path = pageRef.getPath();
+		PageRef pr = getPageRef();
+		if(pr != null) {
+			String path = pr.getPath();
 			boolean isDirectory = path.endsWith(SEPARATOR_STRING);
 			int slashBefore;
 			if(isDirectory) {
@@ -91,7 +93,7 @@ public class File extends Element {
 			if(!isDirectory) {
 				java.io.File resourceFile;
 				try {
-					resourceFile = pageRef.getResourceFile(false, true);
+					resourceFile = pr.getResourceFile(false, true);
 				} catch(IOException e) {
 					throw new WrappedException(e);
 				}
@@ -110,22 +112,30 @@ public class File extends Element {
 	}
 
 	public PageRef getPageRef() {
-		return pageRef;
+		synchronized(lock) {
+			return pageRef;
+		}
 	}
 
 	public void setPageRef(PageRef pageRef) {
-		checkNotFrozen();
-		this.pageRef = pageRef;
+		synchronized(lock) {
+			checkNotFrozen();
+			this.pageRef = pageRef;
+		}
 	}
 
 	@Override
 	public boolean isHidden() {
-		return hidden;
+		synchronized(lock) {
+			return hidden;
+		}
 	}
 
 	public void setHidden(boolean hidden) {
-		checkNotFrozen();
-		this.hidden = hidden;
+		synchronized(lock) {
+			checkNotFrozen();
+			this.hidden = hidden;
+		}
 	}
 
 	@Override
