@@ -40,14 +40,8 @@ public class File extends Element {
 	 */
 	public static final String SEPARATOR_STRING = Character.toString(SEPARATOR_CHAR);
 
-	private PageRef pageRef;
-	private boolean hidden;
-
-	@Override
-	public File freeze() {
-		super.freeze();
-		return this;
-	}
+	private volatile PageRef pageRef;
+	private volatile boolean hidden;
 
 	/**
 	 * Does not include the size on the ID template, also strips any file extension if it will not leave the filename empty.
@@ -112,30 +106,22 @@ public class File extends Element {
 	}
 
 	public PageRef getPageRef() {
-		synchronized(lock) {
-			return pageRef;
-		}
+		return pageRef;
 	}
 
 	public void setPageRef(PageRef pageRef) {
-		synchronized(lock) {
-			checkNotFrozen();
-			this.pageRef = pageRef;
-		}
+		checkNotFrozen();
+		this.pageRef = pageRef;
 	}
 
 	@Override
 	public boolean isHidden() {
-		synchronized(lock) {
-			return hidden;
-		}
+		return hidden;
 	}
 
 	public void setHidden(boolean hidden) {
-		synchronized(lock) {
-			checkNotFrozen();
-			this.hidden = hidden;
-		}
+		checkNotFrozen();
+		this.hidden = hidden;
 	}
 
 	@Override
