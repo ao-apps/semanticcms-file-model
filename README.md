@@ -3,6 +3,7 @@ Files nested within [SemanticCMS](https://semanticcms.com/) pages and elements.
 
 ## Project Links
 * [Project Home](https://semanticcms.com/file/model/)
+* [Changelog](https://semanticcms.com/file/model/changelog)
 * [API Docs](https://semanticcms.com/file/model/apidocs/)
 * [Maven Central Repository](https://search.maven.org/#search%7Cgav%7C1%7Cg:%22com.semanticcms%22%20AND%20a:%22semanticcms-file-model%22)
 * [GitHub](https://github.com/aoindustries/semanticcms-file-model)
