@@ -36,13 +36,12 @@ along with semanticcms-file-model.  If not, see <http://www.gnu.org/licenses />.
 	<packaging>jar</packaging>
 
 	<properties>
-		<bookPath>/file/model</bookPath>
 		<shortTitle>Model</shortTitle>
 		<description.html><![CDATA[Files nested within <a target="_top" href="https://semanticcms.com/">SemanticCMS</a> pages and elements.]]></description.html>
 	</properties>
 
 	<name>SemanticCMS File Model</name>
-	<url>https://semanticcms.com${bookPath}/</url><!-- Can't inherit due to multi-module -->
+	<url>https://semanticcms.com/file/model/</url>
 	<description>Files nested within SemanticCMS pages and elements.</description>
 	<inceptionYear>2013</inceptionYear>
 
