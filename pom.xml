@@ -33,7 +33,7 @@ along with semanticcms-file-model.  If not, see <http://www.gnu.org/licenses />.
 
 	<groupId>com.semanticcms</groupId>
 	<artifactId>semanticcms-file-model</artifactId>
-	<version>1.4.4-SNAPSHOT</version>
+	<version>1.4.4-validation-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -85,17 +85,17 @@ along with semanticcms-file-model.  If not, see <http://www.gnu.org/licenses />.
 		<dependency>
 			<groupId>com.aoindustries</groupId>
 			<artifactId>ao-lang</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1-validation-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.aoindustries</groupId>
 			<artifactId>aocode-public</artifactId>
-			<version>1.9.0</version>
+			<version>1.9.1-validation-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.semanticcms</groupId>
 			<artifactId>semanticcms-core-model</artifactId>
-			<version>1.8.2</version>
+			<version>1.8.3-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
