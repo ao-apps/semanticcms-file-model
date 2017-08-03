@@ -1,6 +1,6 @@
 /*
  * semanticcms-file-model - Files nested within SemanticCMS pages and elements.
- * Copyright (C) 2013, 2014, 2015, 2016  AO Industries, Inc.
+ * Copyright (C) 2013, 2014, 2015, 2016, 2017  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -25,7 +25,10 @@ package com.semanticcms.file.model;
 import com.aoindustries.util.StringUtility;
 import com.aoindustries.util.WrappedException;
 import com.semanticcms.core.model.Element;
-import com.semanticcms.core.model.PageRef;
+import com.semanticcms.core.model.Resource;
+import com.semanticcms.core.model.ResourceRef;
+import com.semanticcms.core.model.ResourceStore;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class File extends Element {
@@ -40,17 +43,23 @@ public class File extends Element {
 	 */
 	public static final String SEPARATOR_STRING = Character.toString(SEPARATOR_CHAR);
 
-	private volatile PageRef pageRef;
+	private final ResourceStore resourceStore;
+
+	private volatile ResourceRef resourceRef;
 	private volatile boolean hidden;
+
+	public File(ResourceStore resourceStore) {
+		this.resourceStore = resourceStore;
+	}
 
 	/**
 	 * Does not include the size on the ID template, also strips any file extension if it will not leave the filename empty.
 	 */
 	@Override
 	protected String getElementIdTemplate() {
-		PageRef pr = getPageRef();
-		if(pr != null) {
-			String path = pr.getPath();
+		ResourceRef rr = getResourceRef();
+		if(rr != null) {
+			String path = rr.getPath();
 			int slashBefore;
 			if(path.endsWith(SEPARATOR_STRING)) {
 				slashBefore = path.lastIndexOf(SEPARATOR_CHAR, path.length() - 2);
@@ -72,9 +81,9 @@ public class File extends Element {
 	 */
 	@Override
 	public String getLabel() {
-		PageRef pr = getPageRef();
-		if(pr != null) {
-			String path = pr.getPath();
+		ResourceRef rr = getResourceRef();
+		if(rr != null) {
+			String path = rr.getPath();
 			boolean isDirectory = path.endsWith(SEPARATOR_STRING);
 			int slashBefore;
 			if(isDirectory) {
@@ -84,20 +93,22 @@ public class File extends Element {
 			}
 			String filename = path.substring(slashBefore + 1);
 			if(filename.isEmpty()) throw new IllegalArgumentException("Invalid filename for file: " + path);
-			if(!isDirectory) {
-				java.io.File resourceFile;
+			if(!isDirectory && resourceStore != null) {
 				try {
-					resourceFile = pr.getResourceFile(false, true);
+					Resource resource = resourceStore.getResource(rr);
+					if(resource.exists()) {
+						return
+							filename
+							+ " ("
+							+ StringUtility.getApproximateSize(resource.getLength())
+							+ ')'
+						;
+					}
+				} catch(FileNotFoundException e) {
+					// Resource removed between calls to exists() and getLength()
+					// fall-through to return filename
 				} catch(IOException e) {
 					throw new WrappedException(e);
-				}
-				if(resourceFile != null) {
-					return
-						filename
-						+ " ("
-						+ StringUtility.getApproximateSize(resourceFile.length())
-						+ ')'
-					;
 				}
 			}
 			return filename;
@@ -105,13 +116,13 @@ public class File extends Element {
 		throw new IllegalStateException("Path not set");
 	}
 
-	public PageRef getPageRef() {
-		return pageRef;
+	public ResourceRef getResourceRef() {
+		return resourceRef;
 	}
 
-	public void setPageRef(PageRef pageRef) {
+	public void setResourceRef(ResourceRef resourceRef) {
 		checkNotFrozen();
-		this.pageRef = pageRef;
+		this.resourceRef = resourceRef;
 	}
 
 	@Override
