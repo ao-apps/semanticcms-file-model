@@ -23,6 +23,7 @@
 package com.semanticcms.file.model;
 
 import com.aoindustries.util.StringUtility;
+import com.aoindustries.util.Tuple2;
 import com.aoindustries.util.WrappedException;
 import com.semanticcms.core.model.Element;
 import com.semanticcms.core.model.Resource;
@@ -43,14 +44,11 @@ public class File extends Element {
 	 */
 	public static final String SEPARATOR_STRING = Character.toString(SEPARATOR_CHAR);
 
-	private final ResourceStore resourceStore;
-
+	// resourceStore and resourceRef are only updated while holding the lock
+	private volatile ResourceStore resourceStore;
 	private volatile ResourceRef resourceRef;
-	private volatile boolean hidden;
 
-	public File(ResourceStore resourceStore) {
-		this.resourceStore = resourceStore;
-	}
+	private volatile boolean hidden;
 
 	/**
 	 * Does not include the size on the ID template, also strips any file extension if it will not leave the filename empty.
@@ -81,7 +79,12 @@ public class File extends Element {
 	 */
 	@Override
 	public String getLabel() {
-		ResourceRef rr = getResourceRef();
+		ResourceStore rs;
+		ResourceRef rr;
+		synchronized(lock) {
+			rs = this.resourceStore;
+			rr = this.resourceRef;
+		}
 		if(rr != null) {
 			String path = rr.getPath();
 			boolean isDirectory = path.endsWith(SEPARATOR_STRING);
@@ -93,22 +96,24 @@ public class File extends Element {
 			}
 			String filename = path.substring(slashBefore + 1);
 			if(filename.isEmpty()) throw new IllegalArgumentException("Invalid filename for file: " + path);
-			if(!isDirectory && resourceStore != null) {
-				try {
-					Resource resource = resourceStore.getResource(rr);
-					if(resource.exists()) {
-						return
-							filename
-							+ " ("
-							+ StringUtility.getApproximateSize(resource.getLength())
-							+ ')'
-						;
+			if(!isDirectory) {
+				if(rs != null) {
+					try {
+						Resource resource = rs.getResource(rr);
+						if(resource.exists()) {
+							return
+								filename
+								+ " ("
+								+ StringUtility.getApproximateSize(resource.getLength())
+								+ ')'
+							;
+						}
+					} catch(FileNotFoundException e) {
+						// Resource removed between calls to exists() and getLength()
+						// fall-through to return filename
+					} catch(IOException e) {
+						throw new WrappedException(e);
 					}
-				} catch(FileNotFoundException e) {
-					// Resource removed between calls to exists() and getLength()
-					// fall-through to return filename
-				} catch(IOException e) {
-					throw new WrappedException(e);
 				}
 			}
 			return filename;
@@ -116,13 +121,34 @@ public class File extends Element {
 		throw new IllegalStateException("Path not set");
 	}
 
+	public ResourceStore getResourceStore() {
+		return resourceStore;
+	}
+
 	public ResourceRef getResourceRef() {
 		return resourceRef;
 	}
 
-	public void setResourceRef(ResourceRef resourceRef) {
-		checkNotFrozen();
-		this.resourceRef = resourceRef;
+	public Tuple2<ResourceStore, ResourceRef> getResource() {
+		synchronized(lock) {
+			if(resourceStore == null && resourceRef == null) {
+				return null;
+			} else {
+				assert resourceRef != null;
+				return new Tuple2<ResourceStore, ResourceRef>(resourceStore, resourceRef);
+			}
+		}
+	}
+
+	public void setResource(ResourceStore resourceStore, ResourceRef resourceRef) {
+		if(resourceStore != null && resourceRef == null) {
+			throw new IllegalArgumentException("resourceRef required when resourceStore provided");
+		}
+		synchronized(lock) {
+			checkNotFrozen();
+			this.resourceStore = resourceStore;
+			this.resourceRef = resourceRef;
+		}
 	}
 
 	@Override
