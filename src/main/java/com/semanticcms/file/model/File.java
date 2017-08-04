@@ -26,7 +26,7 @@ import com.aoindustries.util.StringUtility;
 import com.aoindustries.util.Tuple2;
 import com.aoindustries.util.WrappedException;
 import com.semanticcms.core.model.Element;
-import com.semanticcms.core.model.Resource;
+import com.semanticcms.core.model.ResourceConnection;
 import com.semanticcms.core.model.ResourceRef;
 import com.semanticcms.core.model.ResourceStore;
 import java.io.FileNotFoundException;
@@ -99,14 +99,18 @@ public class File extends Element {
 			if(!isDirectory) {
 				if(rs != null) {
 					try {
-						Resource resource = rs.getResource(rr);
-						if(resource.exists()) {
-							return
-								filename
-								+ " ("
-								+ StringUtility.getApproximateSize(resource.getLength())
-								+ ')'
-							;
+						ResourceConnection conn = rs.getResource(rr.getPath()).open();
+						try {
+							if(conn.exists()) {
+								return
+									filename
+									+ " ("
+									+ StringUtility.getApproximateSize(conn.getLength())
+									+ ')'
+								;
+							}
+						} finally {
+							conn.close();
 						}
 					} catch(FileNotFoundException e) {
 						// Resource removed between calls to exists() and getLength()
