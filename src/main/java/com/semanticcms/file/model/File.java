@@ -26,9 +26,9 @@ import com.aoindustries.util.StringUtility;
 import com.aoindustries.util.Tuple2;
 import com.aoindustries.util.WrappedException;
 import com.semanticcms.core.model.Element;
-import com.semanticcms.core.model.ResourceConnection;
 import com.semanticcms.core.model.ResourceRef;
-import com.semanticcms.core.model.ResourceStore;
+import com.semanticcms.core.resources.ResourceConnection;
+import com.semanticcms.core.resources.ResourceStore;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
