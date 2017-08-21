@@ -57,7 +57,7 @@ public class File extends Element {
 	protected String getElementIdTemplate() {
 		ResourceRef rr = getResourceRef();
 		if(rr != null) {
-			String path = rr.getPath();
+			String path = rr.getPath().toString();
 			int slashBefore;
 			if(path.endsWith(SEPARATOR_STRING)) {
 				slashBefore = path.lastIndexOf(SEPARATOR_CHAR, path.length() - 2);
@@ -86,7 +86,7 @@ public class File extends Element {
 			rr = this.resourceRef;
 		}
 		if(rr != null) {
-			String path = rr.getPath();
+			String path = rr.getPath().toString();
 			boolean isDirectory = path.endsWith(SEPARATOR_STRING);
 			int slashBefore;
 			if(isDirectory) {
