@@ -22,6 +22,7 @@
  */
 package com.semanticcms.file.model;
 
+import com.aoindustries.net.Path;
 import com.aoindustries.util.StringUtility;
 import com.aoindustries.util.Tuple2;
 import com.aoindustries.util.WrappedException;
@@ -33,16 +34,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class File extends Element {
-
-	/**
-	 * The path separator used for all file references.
-	 */
-	public static final char SEPARATOR_CHAR = '/';
-
-	/**
-	 * The path separator as a String.
-	 */
-	public static final String SEPARATOR_STRING = Character.toString(SEPARATOR_CHAR);
 
 	// resourceStore and resourceRef are only updated while holding the lock
 	private volatile ResourceStore resourceStore;
@@ -59,10 +50,10 @@ public class File extends Element {
 		if(rr != null) {
 			String path = rr.getPath().toString();
 			int slashBefore;
-			if(path.endsWith(SEPARATOR_STRING)) {
-				slashBefore = path.lastIndexOf(SEPARATOR_CHAR, path.length() - 2);
+			if(path.endsWith(Path.SEPARATOR_STRING)) {
+				slashBefore = path.lastIndexOf(Path.SEPARATOR_CHAR, path.length() - 2);
 			} else {
-				slashBefore = path.lastIndexOf(SEPARATOR_CHAR);
+				slashBefore = path.lastIndexOf(Path.SEPARATOR_CHAR);
 			}
 			String filename = path.substring(slashBefore + 1);
 			if(filename.isEmpty()) throw new IllegalArgumentException("Invalid filename for file: " + path);
@@ -87,12 +78,12 @@ public class File extends Element {
 		}
 		if(rr != null) {
 			String path = rr.getPath().toString();
-			boolean isDirectory = path.endsWith(SEPARATOR_STRING);
+			boolean isDirectory = path.endsWith(Path.SEPARATOR_STRING);
 			int slashBefore;
 			if(isDirectory) {
-				slashBefore = path.lastIndexOf(SEPARATOR_CHAR, path.length() - 2);
+				slashBefore = path.lastIndexOf(Path.SEPARATOR_CHAR, path.length() - 2);
 			} else {
-				slashBefore = path.lastIndexOf(SEPARATOR_CHAR);
+				slashBefore = path.lastIndexOf(Path.SEPARATOR_CHAR);
 			}
 			String filename = path.substring(slashBefore + 1);
 			if(filename.isEmpty()) throw new IllegalArgumentException("Invalid filename for file: " + path);
