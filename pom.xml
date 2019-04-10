@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 semanticcms-file-model - Files nested within SemanticCMS pages and elements.
-Copyright (C) 2016, 2017, 2018  AO Industries, Inc.
+Copyright (C) 2016, 2017, 2018, 2019  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -40,7 +40,7 @@ along with semanticcms-file-model.  If not, see <http://www.gnu.org/licenses />.
 		<description.html><![CDATA[Files nested within <a target="_top" href="https://semanticcms.com/">SemanticCMS</a> pages and elements.]]></description.html>
 	</properties>
 
-	<name>SemanticCMS File Model</name>
+	<name>SemanticCMS 2 File Model</name>
 	<url>https://semanticcms.com/file/model/</url>
 	<description>Files nested within SemanticCMS pages and elements.</description>
 	<inceptionYear>2013</inceptionYear>
