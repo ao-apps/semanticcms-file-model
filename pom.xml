@@ -25,15 +25,11 @@ along with semanticcms-file-model.  If not, see <http://www.gnu.org/licenses />.
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.semanticcms</groupId>
-		<artifactId>semanticcms-parent</artifactId>
-		<version>1.0.2-SNAPSHOT</version>
+		<groupId>com.semanticcms</groupId><artifactId>semanticcms-parent</artifactId><version>1.0.2-SNAPSHOT</version>
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>com.semanticcms</groupId>
-	<artifactId>semanticcms-file-model</artifactId>
-	<version>1.4.4-SNAPSHOT</version>
+	<groupId>com.semanticcms</groupId><artifactId>semanticcms-file-model</artifactId><version>1.4.4-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -64,8 +60,7 @@ along with semanticcms-file-model.  If not, see <http://www.gnu.org/licenses />.
 				<pluginManagement>
 					<plugins>
 						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-javadoc-plugin</artifactId>
+							<groupId>org.apache.maven.plugins</groupId><artifactId>maven-javadoc-plugin</artifactId>
 							<configuration>
 								<links>
 									<link>${javac.link.javaApi}</link>
@@ -83,19 +78,13 @@ along with semanticcms-file-model.  If not, see <http://www.gnu.org/licenses />.
 
 	<dependencies>
 		<dependency>
-			<groupId>com.aoindustries</groupId>
-			<artifactId>ao-lang</artifactId>
-			<version>1.0.0</version>
+			<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>1.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.aoindustries</groupId>
-			<artifactId>aocode-public</artifactId>
-			<version>1.9.0</version>
+			<groupId>com.aoindustries</groupId><artifactId>aocode-public</artifactId><version>1.9.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.semanticcms</groupId>
-			<artifactId>semanticcms-core-model</artifactId>
-			<version>1.8.2</version>
+			<groupId>com.semanticcms</groupId><artifactId>semanticcms-core-model</artifactId><version>1.8.2</version>
 		</dependency>
 	</dependencies>
 </project>
