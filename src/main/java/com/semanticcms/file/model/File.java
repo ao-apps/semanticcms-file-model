@@ -1,6 +1,6 @@
 /*
  * semanticcms-file-model - Files nested within SemanticCMS pages and elements.
- * Copyright (C) 2013, 2014, 2015, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2013, 2014, 2015, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -90,8 +90,7 @@ public class File extends Element {
 			if(!isDirectory) {
 				if(rs != null) {
 					try {
-						ResourceConnection conn = rs.getResource(rr.getPath()).open();
-						try {
+						try (ResourceConnection conn = rs.getResource(rr.getPath()).open()) {
 							if(conn.exists()) {
 								return
 									filename
@@ -100,8 +99,6 @@ public class File extends Element {
 									+ ')'
 								;
 							}
-						} finally {
-							conn.close();
 						}
 					} catch(FileNotFoundException e) {
 						// Resource removed between calls to exists() and getLength()
@@ -130,7 +127,7 @@ public class File extends Element {
 				return null;
 			} else {
 				assert resourceRef != null;
-				return new Tuple2<ResourceStore, ResourceRef>(resourceStore, resourceRef);
+				return new Tuple2<>(resourceStore, resourceRef);
 			}
 		}
 	}
