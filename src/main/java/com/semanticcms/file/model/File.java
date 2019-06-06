@@ -1,6 +1,6 @@
 /*
  * semanticcms-file-model - Files nested within SemanticCMS pages and elements.
- * Copyright (C) 2013, 2014, 2015, 2016  AO Industries, Inc.
+ * Copyright (C) 2013, 2014, 2015, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,6 +22,7 @@
  */
 package com.semanticcms.file.model;
 
+import com.aoindustries.net.Path;
 import com.aoindustries.util.StringUtility;
 import com.aoindustries.util.WrappedException;
 import com.semanticcms.core.model.Element;
@@ -29,16 +30,6 @@ import com.semanticcms.core.model.PageRef;
 import java.io.IOException;
 
 public class File extends Element {
-
-	/**
-	 * The path separator used for all file references.
-	 */
-	public static final char SEPARATOR_CHAR = '/';
-
-	/**
-	 * The path separator as a String.
-	 */
-	public static final String SEPARATOR_STRING = Character.toString(SEPARATOR_CHAR);
 
 	private volatile PageRef pageRef;
 	private volatile boolean hidden;
@@ -52,10 +43,10 @@ public class File extends Element {
 		if(pr != null) {
 			String path = pr.getPath();
 			int slashBefore;
-			if(path.endsWith(SEPARATOR_STRING)) {
-				slashBefore = path.lastIndexOf(SEPARATOR_CHAR, path.length() - 2);
+			if(path.endsWith(Path.SEPARATOR_STRING)) {
+				slashBefore = path.lastIndexOf(Path.SEPARATOR_CHAR, path.length() - 2);
 			} else {
-				slashBefore = path.lastIndexOf(SEPARATOR_CHAR);
+				slashBefore = path.lastIndexOf(Path.SEPARATOR_CHAR);
 			}
 			String filename = path.substring(slashBefore + 1);
 			if(filename.isEmpty()) throw new IllegalArgumentException("Invalid filename for file: " + path);
@@ -75,12 +66,12 @@ public class File extends Element {
 		PageRef pr = getPageRef();
 		if(pr != null) {
 			String path = pr.getPath();
-			boolean isDirectory = path.endsWith(SEPARATOR_STRING);
+			boolean isDirectory = path.endsWith(Path.SEPARATOR_STRING);
 			int slashBefore;
 			if(isDirectory) {
-				slashBefore = path.lastIndexOf(SEPARATOR_CHAR, path.length() - 2);
+				slashBefore = path.lastIndexOf(Path.SEPARATOR_CHAR, path.length() - 2);
 			} else {
-				slashBefore = path.lastIndexOf(SEPARATOR_CHAR);
+				slashBefore = path.lastIndexOf(Path.SEPARATOR_CHAR);
 			}
 			String filename = path.substring(slashBefore + 1);
 			if(filename.isEmpty()) throw new IllegalArgumentException("Invalid filename for file: " + path);

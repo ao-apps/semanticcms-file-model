@@ -54,7 +54,11 @@ along with semanticcms-file-model.  If not, see <http://www.gnu.org/licenses />.
 				scmUrl="@{documented.scm.url}"
 			>
 				<ul>
-					<!-- TODO: <li>Minimum Java version changed from 1.6 to 1.7.</li>-->
+					<li>
+						Removed <code>File.SEPARATOR_CHAR</code> and <code>File.SEPARATOR_STRING</code>.
+						Using <code>Path.SEPARATOR_CHAR</code> and <code>Path.SEPARATOR_STRING</code> instead.
+					</li>
+					<li>Minimum Java version changed from 1.6 to 1.7.</li>
 					<li>Using managed dependencies:
 						<ol>
 							<li>This project uses transitive managed dependencies.</li>
