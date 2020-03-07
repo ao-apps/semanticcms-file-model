@@ -29,7 +29,7 @@ along with semanticcms-file-model.  If not, see <http://www.gnu.org/licenses />.
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>com.semanticcms</groupId><artifactId>semanticcms-file-model</artifactId><version>1.4.5-POST-SNAPSHOT</version>
+	<groupId>com.semanticcms</groupId><artifactId>semanticcms-file-model</artifactId><version>1.4.6-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<properties>
@@ -51,9 +51,9 @@ along with semanticcms-file-model.  If not, see <http://www.gnu.org/licenses />.
 
 	<scm>
 		<!-- Can't inherit due to multi-module -->
-		<connection>scm:git:git://github.com/aoindustries/${project.artifactId}.git</connection>
-		<developerConnection>scm:git:git@github.com:aoindustries/${project.artifactId}.git</developerConnection>
-		<url>https://github.com/aoindustries/${project.artifactId}</url>
+		<connection>scm:git:git://github.com/aoindustries/semanticcms-file-model.git</connection>
+		<developerConnection>scm:git:git@github.com:aoindustries/semanticcms-file-model.git</developerConnection>
+		<url>https://github.com/aoindustries/semanticcms-file-model</url>
 		<tag>HEAD</tag>
 	</scm>
 
