@@ -22,10 +22,10 @@
  */
 package com.semanticcms.file.model;
 
-import com.aoindustries.net.Path;
+import com.aoindustries.exception.WrappedException;
 import com.aoindustries.lang.Strings;
+import com.aoindustries.net.Path;
 import com.aoindustries.util.Tuple2;
-import com.aoindustries.util.WrappedException;
 import com.semanticcms.core.model.Element;
 import com.semanticcms.core.model.ResourceRef;
 import com.semanticcms.core.resources.ResourceConnection;
