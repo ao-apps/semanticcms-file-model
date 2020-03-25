@@ -22,9 +22,9 @@
  */
 package com.semanticcms.file.model;
 
-import com.aoindustries.net.Path;
+import com.aoindustries.exception.WrappedException;
 import com.aoindustries.lang.Strings;
-import com.aoindustries.util.WrappedException;
+import com.aoindustries.net.Path;
 import com.semanticcms.core.model.Element;
 import com.semanticcms.core.model.PageRef;
 import java.io.IOException;
