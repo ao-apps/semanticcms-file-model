@@ -22,7 +22,6 @@
  */
 package com.semanticcms.file.model;
 
-import com.aoindustries.exception.WrappedException;
 import com.aoindustries.lang.Strings;
 import com.aoindustries.net.Path;
 import com.aoindustries.util.Tuple2;
@@ -32,6 +31,7 @@ import com.semanticcms.core.resources.ResourceConnection;
 import com.semanticcms.core.resources.ResourceStore;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 
 public class File extends Element {
 
@@ -104,7 +104,7 @@ public class File extends Element {
 						// Resource removed between calls to exists() and getLength()
 						// fall-through to return filename
 					} catch(IOException e) {
-						throw new WrappedException(e);
+						throw new UncheckedIOException(e);
 					}
 				}
 			}
