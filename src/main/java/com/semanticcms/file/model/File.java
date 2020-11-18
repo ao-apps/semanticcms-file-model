@@ -22,12 +22,12 @@
  */
 package com.semanticcms.file.model;
 
-import com.aoindustries.exception.WrappedException;
 import com.aoindustries.lang.Strings;
 import com.aoindustries.net.Path;
 import com.semanticcms.core.model.Element;
 import com.semanticcms.core.model.PageRef;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 
 public class File extends Element {
 
@@ -80,7 +80,7 @@ public class File extends Element {
 				try {
 					resourceFile = pr.getResourceFile(false, true);
 				} catch(IOException e) {
-					throw new WrappedException(e);
+					throw new UncheckedIOException(e);
 				}
 				if(resourceFile != null) {
 					return
