@@ -1,6 +1,6 @@
 /*
  * semanticcms-file-model - Files nested within SemanticCMS pages and elements.
- * Copyright (C) 2013, 2014, 2015, 2016, 2017, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2013, 2014, 2015, 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,8 +22,8 @@
  */
 package com.semanticcms.file.model;
 
-import com.aoindustries.lang.Strings;
-import com.aoindustries.net.Path;
+import com.aoapps.lang.Strings;
+import com.aoapps.net.Path;
 import com.semanticcms.core.model.Element;
 import com.semanticcms.core.model.PageRef;
 import java.io.IOException;
