@@ -33,6 +33,7 @@ along with semanticcms-file-model.  If not, see <http://www.gnu.org/licenses />.
 	<packaging>bundle</packaging>
 
 	<properties>
+		<module.name>com.semanticcms.file.model</module.name>
 		<javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://semanticcms.com/">SemanticCMS</a>
 / <a target="${javadoc.target}" href="https://semanticcms.com/file/">File</a>
 / <a target="${javadoc.target}" href="${project.url}">Model</a>]]></javadoc.breadcrumbs>
