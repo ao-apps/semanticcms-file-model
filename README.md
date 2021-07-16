@@ -8,6 +8,7 @@
 [![license: LGPL v3](https://semanticcms.com/ao-badges/license-lgpl-3.0.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 
 [![Build](https://github.com/aoindustries/semanticcms-file-model/workflows/Build/badge.svg?branch=1.x)](https://github.com/aoindustries/semanticcms-file-model/actions?query=workflow%3ABuild)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.semanticcms/semanticcms-file-model/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.semanticcms/semanticcms-file-model)
 
 Files nested within [SemanticCMS](https://github.com/aoindustries/semanticcms) pages and elements.
 
