@@ -40,7 +40,7 @@ along with semanticcms-file-model.  If not, see <http://www.gnu.org/licenses />.
 		<description.html><![CDATA[Files nested within <a target="${javadoc.target}" href="https://semanticcms.com/">SemanticCMS</a> pages and elements.]]></description.html>
 		<!-- SonarQube -->
 		<sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
-		<sonar.organization>aoindustries</sonar.organization>
+		<sonar.organization>ao-apps</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<!-- TODO: Implement tests -->
 		<sonar.coverage.exclusions>**.*</sonar.coverage.exclusions>
@@ -75,20 +75,20 @@ along with semanticcms-file-model.  If not, see <http://www.gnu.org/licenses />.
 	</developers>
 
 	<scm>
-		<connection>scm:git:git://github.com/aoindustries/semanticcms-file-model.git</connection>
-		<developerConnection>scm:git:git@github.com:aoindustries/semanticcms-file-model.git</developerConnection>
-		<url>https://github.com/aoindustries/semanticcms-file-model</url>
+		<connection>scm:git:git://github.com/ao-apps/semanticcms-file-model.git</connection>
+		<developerConnection>scm:git:git@github.com:ao-apps/semanticcms-file-model.git</developerConnection>
+		<url>https://github.com/ao-apps/semanticcms-file-model</url>
 		<tag>HEAD</tag>
 	</scm>
 
 	<issueManagement>
 		<system>GitHub Issues</system>
-		<url>https://github.com/aoindustries/semanticcms-file-model/issues</url>
+		<url>https://github.com/ao-apps/semanticcms-file-model/issues</url>
 	</issueManagement>
 
 	<ciManagement>
 		<system>GitHub Actions</system>
-		<url>https://github.com/aoindustries/semanticcms-file-model/actions</url>
+		<url>https://github.com/ao-apps/semanticcms-file-model/actions</url>
 	</ciManagement>
 
 	<repositories>
