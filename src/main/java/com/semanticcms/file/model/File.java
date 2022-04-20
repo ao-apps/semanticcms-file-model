@@ -36,126 +36,132 @@ import java.io.UncheckedIOException;
 
 public class File extends Element {
 
-	// resourceStore and resourceRef are only updated while holding the lock
-	private volatile ResourceStore resourceStore;
-	private volatile ResourceRef resourceRef;
+  // resourceStore and resourceRef are only updated while holding the lock
+  private volatile ResourceStore resourceStore;
+  private volatile ResourceRef resourceRef;
 
-	private volatile boolean hidden;
+  private volatile boolean hidden;
 
-	/**
-	 * Does not include the size on the ID template, also strips any file extension if it will not leave the filename empty.
-	 */
-	@Override
-	protected String getElementIdTemplate() {
-		ResourceRef rr = getResourceRef();
-		if(rr != null) {
-			String path = rr.getPath().toString();
-			int slashBefore;
-			if(path.endsWith(Path.SEPARATOR_STRING)) {
-				slashBefore = path.lastIndexOf(Path.SEPARATOR_CHAR, path.length() - 2);
-			} else {
-				slashBefore = path.lastIndexOf(Path.SEPARATOR_CHAR);
-			}
-			String filename = path.substring(slashBefore + 1);
-			if(filename.isEmpty()) throw new IllegalArgumentException("Invalid filename for file: " + path);
-			// Strip extension if will not leave empty
-			int lastDot = filename.lastIndexOf('.');
-			if(lastDot > 0) filename = filename.substring(0, lastDot);
-			return filename;
-		}
-		throw new IllegalStateException("Path not set");
-	}
+  /**
+   * Does not include the size on the ID template, also strips any file extension if it will not leave the filename empty.
+   */
+  @Override
+  protected String getElementIdTemplate() {
+    ResourceRef rr = getResourceRef();
+    if (rr != null) {
+      String path = rr.getPath().toString();
+      int slashBefore;
+      if (path.endsWith(Path.SEPARATOR_STRING)) {
+        slashBefore = path.lastIndexOf(Path.SEPARATOR_CHAR, path.length() - 2);
+      } else {
+        slashBefore = path.lastIndexOf(Path.SEPARATOR_CHAR);
+      }
+      String filename = path.substring(slashBefore + 1);
+      if (filename.isEmpty()) {
+        throw new IllegalArgumentException("Invalid filename for file: " + path);
+      }
+      // Strip extension if will not leave empty
+      int lastDot = filename.lastIndexOf('.');
+      if (lastDot > 0) {
+        filename = filename.substring(0, lastDot);
+      }
+      return filename;
+    }
+    throw new IllegalStateException("Path not set");
+  }
 
-	/**
-	 * The label is always the filename.
-	 */
-	@Override
-	public String getLabel() {
-		ResourceStore rs;
-		ResourceRef rr;
-		synchronized(lock) {
-			rs = this.resourceStore;
-			rr = this.resourceRef;
-		}
-		if(rr != null) {
-			String path = rr.getPath().toString();
-			boolean isDirectory = path.endsWith(Path.SEPARATOR_STRING);
-			int slashBefore;
-			if(isDirectory) {
-				slashBefore = path.lastIndexOf(Path.SEPARATOR_CHAR, path.length() - 2);
-			} else {
-				slashBefore = path.lastIndexOf(Path.SEPARATOR_CHAR);
-			}
-			String filename = path.substring(slashBefore + 1);
-			if(filename.isEmpty()) throw new IllegalArgumentException("Invalid filename for file: " + path);
-			if(!isDirectory) {
-				if(rs != null) {
-					try {
-						try (ResourceConnection conn = rs.getResource(rr.getPath()).open()) {
-							if(conn.exists()) {
-								return
-									filename
-									+ " ("
-									+ Strings.getApproximateSize(conn.getLength())
-									+ ')'
-								;
-							}
-						}
-					} catch(FileNotFoundException e) {
-						// Resource removed between calls to exists() and getLength()
-						// fall-through to return filename
-					} catch(IOException e) {
-						throw new UncheckedIOException(e);
-					}
-				}
-			}
-			return filename;
-		}
-		throw new IllegalStateException("Path not set");
-	}
+  /**
+   * The label is always the filename.
+   */
+  @Override
+  public String getLabel() {
+    ResourceStore rs;
+    ResourceRef rr;
+    synchronized (lock) {
+      rs = this.resourceStore;
+      rr = this.resourceRef;
+    }
+    if (rr != null) {
+      String path = rr.getPath().toString();
+      boolean isDirectory = path.endsWith(Path.SEPARATOR_STRING);
+      int slashBefore;
+      if (isDirectory) {
+        slashBefore = path.lastIndexOf(Path.SEPARATOR_CHAR, path.length() - 2);
+      } else {
+        slashBefore = path.lastIndexOf(Path.SEPARATOR_CHAR);
+      }
+      String filename = path.substring(slashBefore + 1);
+      if (filename.isEmpty()) {
+        throw new IllegalArgumentException("Invalid filename for file: " + path);
+      }
+      if (!isDirectory) {
+        if (rs != null) {
+          try {
+            try (ResourceConnection conn = rs.getResource(rr.getPath()).open()) {
+              if (conn.exists()) {
+                return
+                  filename
+                  + " ("
+                  + Strings.getApproximateSize(conn.getLength())
+                  + ')'
+                ;
+              }
+            }
+          } catch (FileNotFoundException e) {
+            // Resource removed between calls to exists() and getLength()
+            // fall-through to return filename
+          } catch (IOException e) {
+            throw new UncheckedIOException(e);
+          }
+        }
+      }
+      return filename;
+    }
+    throw new IllegalStateException("Path not set");
+  }
 
-	public ResourceStore getResourceStore() {
-		return resourceStore;
-	}
+  public ResourceStore getResourceStore() {
+    return resourceStore;
+  }
 
-	public ResourceRef getResourceRef() {
-		return resourceRef;
-	}
+  public ResourceRef getResourceRef() {
+    return resourceRef;
+  }
 
-	public Tuple2<ResourceStore, ResourceRef> getResource() {
-		synchronized(lock) {
-			if(resourceStore == null && resourceRef == null) {
-				return null;
-			} else {
-				assert resourceRef != null;
-				return new Tuple2<>(resourceStore, resourceRef);
-			}
-		}
-	}
+  public Tuple2<ResourceStore, ResourceRef> getResource() {
+    synchronized (lock) {
+      if (resourceStore == null && resourceRef == null) {
+        return null;
+      } else {
+        assert resourceRef != null;
+        return new Tuple2<>(resourceStore, resourceRef);
+      }
+    }
+  }
 
-	public void setResource(ResourceStore resourceStore, ResourceRef resourceRef) {
-		if(resourceStore != null && resourceRef == null) {
-			throw new IllegalArgumentException("resourceRef required when resourceStore provided");
-		}
-		synchronized(lock) {
-			checkNotFrozen();
-			this.resourceStore = resourceStore;
-			this.resourceRef = resourceRef;
-		}
-	}
+  public void setResource(ResourceStore resourceStore, ResourceRef resourceRef) {
+    if (resourceStore != null && resourceRef == null) {
+      throw new IllegalArgumentException("resourceRef required when resourceStore provided");
+    }
+    synchronized (lock) {
+      checkNotFrozen();
+      this.resourceStore = resourceStore;
+      this.resourceRef = resourceRef;
+    }
+  }
 
-	@Override
-	public boolean isHidden() {
-		return hidden;
-	}
+  @Override
+  public boolean isHidden() {
+    return hidden;
+  }
 
-	public void setHidden(boolean hidden) {
-		checkNotFrozen();
-		this.hidden = hidden;
-	}
+  public void setHidden(boolean hidden) {
+    checkNotFrozen();
+    this.hidden = hidden;
+  }
 
-	@Override
-	protected String getDefaultIdPrefix() {
-		return "file";
-	}
+  @Override
+  protected String getDefaultIdPrefix() {
+    return "file";
+  }
 }
