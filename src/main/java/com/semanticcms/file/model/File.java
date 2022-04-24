@@ -91,10 +91,10 @@ public class File extends Element {
         }
         if (resourceFile != null) {
           return
-            filename
-            + " ("
-            + Strings.getApproximateSize(resourceFile.length())
-            + ')'
+              filename
+                  + " ("
+                  + Strings.getApproximateSize(resourceFile.length())
+                  + ')'
           ;
         }
       }
