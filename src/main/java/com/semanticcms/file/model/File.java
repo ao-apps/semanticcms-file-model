@@ -100,10 +100,10 @@ public class File extends Element {
             try (ResourceConnection conn = rs.getResource(rr.getPath()).open()) {
               if (conn.exists()) {
                 return
-                  filename
-                  + " ("
-                  + Strings.getApproximateSize(conn.getLength())
-                  + ')'
+                    filename
+                        + " ("
+                        + Strings.getApproximateSize(conn.getLength())
+                        + ')'
                 ;
               }
             }

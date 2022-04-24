@@ -41,9 +41,9 @@ public class ModularApidocsRedirect extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     HttpServletUtil.sendRedirect(
-      HttpServletResponse.SC_MOVED_PERMANENTLY, req, resp,
-      "/file/model/apidocs/com.semanticcms.file.model/com" + Objects.toString(req.getPathInfo(), ""),
-      URIParametersUtils.of(req.getQueryString()), true, false
+        HttpServletResponse.SC_MOVED_PERMANENTLY, req, resp,
+        "/file/model/apidocs/com.semanticcms.file.model/com" + Objects.toString(req.getPathInfo(), ""),
+        URIParametersUtils.of(req.getQueryString()), true, false
     );
   }
 }
