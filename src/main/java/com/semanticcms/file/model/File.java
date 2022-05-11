@@ -34,6 +34,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 
+/**
+ * Models files nested within SemanticCMS pages and elements.
+ */
 public class File extends Element {
 
   // resourceStore and resourceRef are only updated while holding the lock
@@ -103,8 +106,7 @@ public class File extends Element {
                     filename
                         + " ("
                         + Strings.getApproximateSize(conn.getLength())
-                        + ')'
-                ;
+                        + ')';
               }
             }
           } catch (FileNotFoundException e) {
@@ -128,6 +130,9 @@ public class File extends Element {
     return resourceRef;
   }
 
+  /**
+   * Gets the resource this file accesses.
+   */
   public Tuple2<ResourceStore, ResourceRef> getResource() {
     synchronized (lock) {
       if (resourceStore == null && resourceRef == null) {
@@ -139,6 +144,9 @@ public class File extends Element {
     }
   }
 
+  /**
+   * Sets the resource this file accesses.
+   */
   public void setResource(ResourceStore resourceStore, ResourceRef resourceRef) {
     if (resourceStore != null && resourceRef == null) {
       throw new IllegalArgumentException("resourceRef required when resourceStore provided");
