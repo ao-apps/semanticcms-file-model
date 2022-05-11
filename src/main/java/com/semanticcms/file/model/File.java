@@ -30,6 +30,9 @@ import com.semanticcms.core.model.PageRef;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 
+/**
+ * Models files nested within SemanticCMS pages and elements.
+ */
 public class File extends Element {
 
   private volatile PageRef pageRef;
@@ -94,8 +97,7 @@ public class File extends Element {
               filename
                   + " ("
                   + Strings.getApproximateSize(resourceFile.length())
-                  + ')'
-          ;
+                  + ')';
         }
       }
       return filename;
