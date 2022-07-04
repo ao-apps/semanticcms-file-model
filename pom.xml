@@ -46,7 +46,7 @@ along with semanticcms-file-model.  If not, see <https://www.gnu.org/licenses/>.
     <sonar.coverage.exclusions>**.*</sonar.coverage.exclusions>
   </properties>
 
-  <name>SemanticCMS File Model²</name>
+  <name>SemanticCMS File Model</name>
   <url>https://semanticcms.com/file/model/</url>
   <description>Files nested within SemanticCMS pages and elements.</description>
   <inceptionYear>2013</inceptionYear>
