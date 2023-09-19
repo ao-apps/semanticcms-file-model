@@ -41,6 +41,9 @@ along with semanticcms-file-model.  If not, see <https://www.gnu.org/licenses/>.
     <documented.artifactId>semanticcms-file-model</documented.artifactId>
     <documented.name>SemanticCMS File Model</documented.name>
     <documented.description>Files nested within SemanticCMS pages and elements.</documented.description>
+    <javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://semanticcms.com/">SemanticCMS</a>
+/ <a target="${javadoc.target}" href="https://semanticcms.com/file/">File</a>
+/ <a target="${javadoc.target}" href="${project.url}">Model</a>]]></javadoc.breadcrumbs>
 
     <description.html><![CDATA[Documentation for <a target="${javadoc.target}" href="${project.url}">${documented.name}</a> in <a target="${javadoc.target}" href="https://semanticcms.com/">SemanticCMS</a> format.]]></description.html>
   </properties>
