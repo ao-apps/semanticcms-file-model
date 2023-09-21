@@ -39,7 +39,7 @@ along with semanticcms-file-model.  If not, see <https://www.gnu.org/licenses/>.
     <javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://semanticcms.com/">SemanticCMS</a>
 / <a target="${javadoc.target}" href="https://semanticcms.com/file/">File</a>
 / <a target="${javadoc.target}" href="${project.url}">Model</a>]]></javadoc.breadcrumbs>
-    
+
     <description.html><![CDATA[Files nested within <a target="${javadoc.target}" href="https://semanticcms.com/">SemanticCMS</a> pages and elements.]]></description.html>
     <!-- TODO: Implement tests -->
     <sonar.coverage.exclusions>**.*</sonar.coverage.exclusions>
