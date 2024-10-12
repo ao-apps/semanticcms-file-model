@@ -1,6 +1,6 @@
 /*
  * semanticcms-file-model - Files nested within SemanticCMS pages and elements.
- * Copyright (C) 2013, 2014, 2015, 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2013, 2014, 2015, 2016, 2017, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -145,7 +145,7 @@ public class File extends Element {
   }
 
   /**
-   * Sets the resource this file accesses.
+   * Sets the resource this file accesses while making sure not frozen.
    */
   public void setResource(ResourceStore resourceStore, ResourceRef resourceRef) {
     if (resourceStore != null && resourceRef == null) {
@@ -163,6 +163,9 @@ public class File extends Element {
     return hidden;
   }
 
+  /**
+   * Sets the hidden flag while making sure not frozen.
+   */
   public void setHidden(boolean hidden) {
     checkNotFrozen();
     this.hidden = hidden;
